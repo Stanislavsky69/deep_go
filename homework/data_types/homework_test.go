@@ -8,8 +8,13 @@ import (
 
 // go test -v homework_test.go
 
-func ToLittleEndian(number uint32) uint32 {
-	return 0 // need to implement
+func ToLittleEndian(n uint32) uint32 {
+	b0 := (n & 0x000000FF) << 24 // Младший байт  переносим на место старшего
+	b1 := (n & 0x0000FF00) << 8  // Второй байт  сдвигаем на позицию третьего
+	b2 := (n & 0x00FF0000) >> 8  // Третий байт  сдвигаем на позицию второго
+	b3 := (n & 0xFF000000) >> 24 // Старший байт  переносим на место младшего
+
+	return b0 | b1 | b2 | b3
 }
 
 func TestСonversion(t *testing.T) {
